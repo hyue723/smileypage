@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}SmileyPage All Events{% endblock %}
+{% block title %}Diagnosis All Reportss{% endblock %}
 
-{% block username %}{{user.username}}'s SmileyPage -- AllEvents{% endblock %}
+{% block username %}{{user.username}}'s HomePage -- AllReports{% endblock %}
 
 {% block body %}
 <div class="row">
@@ -24,12 +24,12 @@
                 <input type = 'submit' value='Search'/>
                 </form>
             </li>
-            <li vertical-align="center">
+<!--             <li vertical-align="center">
                 <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
                 <input type='text' name = 'l' placeholder = 'Search Location' value = '{{request.GET.l }}'/>
                 <input type = 'submit' value='Search'/>
                 </form>
-            </li>
+            </li> -->
 
             </li>
         </ul>

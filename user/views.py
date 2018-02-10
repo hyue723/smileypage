@@ -508,19 +508,19 @@ def accept_friendship(request, message_id):
         message.viewed = True
         message.accepted = True
         message.save()
-        relation = Friend()
+        relation = Connection()
         relation.to_user = message.from_user
         relation.from_user = message.to_user
         relation.save()
-        relation_reverse = Friend()
+        relation_reverse = Connection()
         relation_reverse.to_user = message.to_user
         relation_reverse.from_user = message.from_user
         relation_reverse.save()
         user_profile = get_object_or_404(Profile, user = user)
-        user_profile.friends.add(message.from_user)
+        user_profile.connections.add(message.from_user)
         user_profile.save()
         other_profile = get_object_or_404(Profile, user=message.from_user)
-        other_profile.friends.add(user)
+        other_profile.connections.add(user)
         other_profile.save()
         context = {'user':user, "message": message}
         return render(request, 'user/request_detail.html', context)
@@ -586,7 +586,7 @@ def measure(lat1, lon1, lat2, lon2):
     R = 6378.137
     dLat = lat2 * math.pi / 180 - lat1 * math.pi / 180
     dLon = lon2 * math.pi / 180 - lon1 * math.pi / 180
-    a = math.sin(dLat/2) * math.sin(dLat/2) + math.cos(lat1 * math.pi / 180) * math.cos(lat2 * math.PI / 180) * math.sin(dLon/2) * math.sin(dLon/2)
+    a = math.sin(dLat/2) * math.sin(dLat/2) + math.cos(lat1 * math.pi / 180) * math.cos(lat2 * math.pi / 180) * math.sin(dLon/2) * math.sin(dLon/2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
     d = R * c
     return d * 1000
@@ -596,7 +596,7 @@ def getgeo(address):
     address = standardize(address)
     url += "address=%s&key=%s" % (address, API_KEY)
     v = urlopen(url).read()
-    j = json.loads(v)
+    j = json.loads(v.decode("ascii"))
     geo = j['results'][0]['geometry']['location']
     return (geo['lat'], geo['lng'])
 
@@ -606,14 +606,14 @@ def distance(lat, lng, lat1, lng1):
 def aggregateDataWithinRange(location, radius):
     tmp = []
     lat, lng = getgeo(location)
-    for Event in Event.objects.all():
+    for event in Event.objects.all():
         symptom = "none"
         #convert location to [lat, lon]
-        lat1, lng2 = getgeo(event.location)
+        lat1, lng1 = getgeo(event.location)
         symptoms = parse(event.symptoms)
         prediction = event.prediction
         for symptom in symptoms: 
-            if symptom in prediction: 
+            if prediction != None and symptom in prediction: 
                 symptom = symptom
                 break
         if distance(lat, lng, lat1, lng1) <= radius:
