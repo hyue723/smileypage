@@ -10,15 +10,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style>
-      #marker {
+      div[id$='0'] {
         width: 20px;
         height: 20px;
-        border: 1px solid #088;
-        border-radius: 10px;
-        background-color: #0FF;
-        opacity: 0.5;
       }
-      #vienna {
+      #label {
         text-decoration: none;
         color: white;
         font-size: 11pt;
@@ -28,61 +24,122 @@
       .popover-content {
         min-width: 180px;
       }
+      .default_class {
+        border-radius: 10px;
+        background-color: #F00;
+        opacity: 0.5;
+      }
+      .mild_class {
+        border-radius: 10px;
+        background-color: #16A085;
+        opacity: 0.5;
+      }
+      .severe_class {
+        border-radius: 10px;
+        background-color: #F2F60A;
+        opacity: 0.5;
+      }
+      .emergency_class {
+        border-radius: 10px;
+        background-color: #000;
+        opacity: 0.5;
+      }
     </style>
   </head>
   <body>
     <div id="map" class="map"></div>
-    <div style="display: none;">
-      <!-- Clickable label for Vienna -->
-      <a class="overlay" id="vienna" target="_blank" href="http://en.wikipedia.org/wiki/Vienna">Vienna</a>
-      <div id="marker" title="Marker"></div>
-      <!-- Popup -->
-      <div id="popup" title="Welcome to OpenLayers"></div>
+    <div id="wrapper" style="display: none;">
+      <div id="marker0" class="Marker"></div>
+      <div id="marker10" class="Marker"></div>
+      <div id="marker20" class="Marker"></div>
+      <div id="marker30" class="Marker"></div>
+      <div id="marker40" class="Marker"></div>
+      <div id="marker50" class="Marker"></div>
+      <div id="marker60" class="Marker"></div>
+      <div id="marker70" class="Marker"></div>
+      <div id="marker80" class="Marker"></div>
+      <div id="marker90" class="Marker"></div>
+      <div id="marker100" class="Marker"></div>
+      <div id="marker110" class="Marker"></div>
+      <div id="marker120" class="Marker"></div>
+      <div id="marker130" class="Marker"></div>
+      <div id="marker140" class="Marker"></div>
+      <div id="marker150" class="Marker"></div>
+      <div id="marker160" class="Marker"></div>
+      <div id="marker170" class="Marker"></div>
+      <div id="marker180" class="Marker"></div>
+      <div id="marker190" class="Marker"></div>
+      <div id="marker200" class="Marker"></div>
+
+      <!--<div id="popup" title="Welcome to OpenLayers"></div>-->
     </div>
     <script>
       var layer = new ol.layer.Tile({
         source: new ol.source.OSM()
       });
-
+      //var locations = {{ locations || safe }};
+      locations = ["cough 16.2807333 -16.53877326", 
+                   "fever 3.34559232 8.65413288",
+                   "fever 8.49563241 10.65041661"];
+      center = locations[0].split(' ');
+      center[1] = parseFloat(center[1]);
+      center[2] = parseFloat(center[2]);
+      console.log(center);
       var map = new ol.Map({
         layers: [layer],
         target: 'map',
         view: new ol.View({
-          center: [0, 0],
-          zoom: 2
+          center: ol.proj.fromLonLat(center.slice(1,3)),
+          zoom: 4
         })
       });
-
-      var pos = ol.proj.fromLonLat([16.3725, 48.208889]);
-
-      // Vienna marker
-      var marker = new ol.Overlay({
-        position: pos,
-        positioning: 'center-center',
-        element: document.getElementById('marker'),
-        stopEvent: false
-      });
-      map.addOverlay(marker);
-
-      // Vienna label
-      var vienna = new ol.Overlay({
-        position: pos,
-        element: document.getElementById('vienna')
-      });
-      map.addOverlay(vienna);
-
-      // Popup showing the position the user clicked
-      var popup = new ol.Overlay({
-        element: document.getElementById('popup')
-      });
-      map.addOverlay(popup);
-
+      
+      for(var i = 0; i < locations.length; i++) {
+        var loc = locations[i].split(' ');
+        loc[1] = parseFloat(loc[1]);
+        loc[2] = parseFloat(loc[2]);
+        var pos = ol.proj.fromLonLat(loc.slice(1,3));
+        var classN = 'default_class';
+        if (loc[0] == "cough")
+          classN = 'mild_class';
+        else if (loc[0] == "fever")
+          classN = 'severe_class';
+        else if (loc[0] == "vomit")
+          classN = 'emergency_class';
+        var marker = new ol.Overlay({
+          position: pos,
+          positioning: 'center-center',
+          element: document.getElementById('marker'+i*10),
+          className: classN,
+          stopEvent: false
+        });
+        map.addOverlay(marker);
+      }
+      // var pos = ol.proj.fromLonLat([16.3725, 10.208889]);
+      // // overlay marker
+      // var marker = new ol.Overlay({
+      //   position: pos,
+      //   positioning: 'center-center',
+      //   element: document.getElementById('marker'),
+      //   stopEvent: false
+      // });
+      // map.addOverlay(marker);
+      // // label
+      // var label = new ol.Overlay({
+      //   position: pos,
+      //   element: document.getElementById('label')
+      // });
+      // map.addOverlay(label);
+      // // Popup showing the position the user clicked
+      // var popup = new ol.Overlay({
+      //   element: document.getElementById('popup')
+      // });
+      // map.addOverlay(popup);
       map.on('click', function(evt) {
         var element = popup.getElement();
         var coordinate = evt.coordinate;
         var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
             coordinate, 'EPSG:3857', 'EPSG:4326'));
-
         $(element).popover('destroy');
         popup.setPosition(coordinate);
         // the keys are quoted to prevent renaming in ADVANCED mode.
