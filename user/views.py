@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 import datetime
 from django.db.models import Q
 import scripts.predict
+import scripts.imageClassify
 
 
 def register(request):
