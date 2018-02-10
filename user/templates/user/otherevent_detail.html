@@ -1,0 +1,62 @@
+{% extends 'user/base.html' %}
+{% block title %}SmileyPage Event Detail{% endblock %}
+
+{% block username %}{{user.username}}'s SmileyPage{% endblock %}
+
+{% block body %}
+<body>
+    <div class="row">
+
+        <div class="box col-lg-6" style="border:40px">
+            <div class="col-lg-12" style="border:20px " >  
+                <hr>
+                <h2 class="intro-text text-center">
+                Event:
+                    <strong>{{event.name}}</strong>
+                </h2>
+                <hr>
+                {% if event.kind == 'Food' %}
+                    <img src="/static/img/train.jpg" class="img-responsive img-border img-left">
+                {% elif event.kind == 'Study' %}
+                    <img src="/static/img/travel.jpg" class="img-responsive img-border img-left"> 
+                {% else %}
+                    <img src="/static/img/eiffel.jpg" class="img-responsive img-border img-left">   
+                {% endif %} 
+                <hr class="visible-xs">
+                <h3 style="position:relative; top: 10px;">Event Kind: {{event.kind}}</h3>
+                <h3 id="normalLetter"><a href="#">Creator: {{event.user.username}}</a></h3>
+                <h3 id="normalLetter">Event Date: {{event.date}}</h3>
+                <h3 id="normalLetter">Event Start Time: {{event.start_time}}</h3>
+                <h3 id="normalLetter">Event End Time: {{event.end_time}}</h3>
+                <h3 id="normalLetter">Event Description:</h3>
+                <p style = "font-size :20px">{{event.description}}</p>
+            </div>
+        </div>
+
+
+
+        <div class="box col-lg-6" style="border:40px">
+            <div class="col-lg-12" style="border:20px " align="center">  
+                <hr>
+                <h2 class="intro-text text-center">
+                    <strong>Event's Location Map</strong>
+                </h2>
+                <hr>
+                <iframe
+                width = "800px"
+                height= "600px"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDBY6iWRdwPpNU42g4cgXFvpeO-sW8-ocU
+                  &q={{event.location}}" allowfullscreen>
+                </iframe>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+
+{% endblock %}

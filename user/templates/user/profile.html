@@ -1,0 +1,116 @@
+<!doctype html>
+{% extends 'user/base.html' %}
+{% load staticfiles %}
+
+{% block title %}SmileyPage MyEvents{% endblock %}
+
+{% block username %}{{user.username}}'s SmileyPage -- MyEvents{% endblock %}
+
+{% block body %}
+{% for profile in profiles %}
+<div class="row" style="padding-left:20px">
+    <div class = "col-sm-3">
+        <div class="box">
+            <ul class="nav navbar-nav" vertical-align="center">
+            <li vertical-align="center">
+                <form method = 'GET' action=''>
+                <input type='text' name = 'q' placeholder = 'Search MyEvents' value = '{{request.GET.q }}'/>
+                <input type = 'submit' value='Search'/>
+                </form>
+            </li>
+            </ul>
+        </div>
+        <div class="panel panel-default" id="transparent">
+            <img src = '{{ profile.profile_photo.url}}' class = "img-responsive img-rounded" >
+            <h3 style="padding-left:10px"id="normalLetter">Username: {{user.username}}</h3>
+            <h3 style="padding-left:10px" id="normalLetter">Interests: {{profile.interest}}</h3>
+            <h3 style="padding-left:10px" id="normalLetter">Status in CMU: {{profile.status_in_cmu}}</h3>
+            <h3 style="padding-left:10px" id="normalLetter">Studying Fields: {{profile.studying_fields}}</h3>
+            {% if profile.facebook_page %}
+            <h3 style="padding-left:10px" id="normalLetter">Facebook Page: <a id="normalLetter" href = {{profile.facebook_page}}><img src = '/static/img/Facebook.png' style = 'width:100px; height:50px;'></a></h3>
+            {% endif %}
+            <a style="padding-left:10px" href="{% url 'user:edit_profile' %}" class='btn btn-primary btn-sm' role='button'>Click Here to Edit Profile</a>
+        </div>
+    </div>
+
+    <div class = "col-sm-8">
+    <nav class="navbar navbar-default" role = "navigation">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href = "{% url 'user:myevents_past' %}">Past Events</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:myevents_current' %}">Current Events</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:myevents_future' %}">Future Events</a>
+            </li>
+            <li>
+            <a href="{% url 'user:create_event' %}">Create A New Event</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    {% if events %}
+    {% for event in events %}
+    <div class="col-sm-8 col-lg-4">
+                    <div class="thumbnail"  id="transparent">
+                        <a href="{% url 'user:event_detail' event.id %}">
+                            {% if event.kind == 'Food' %}
+                                <img src="/static/img/train.jpg" style = "width:400px; height:300px;" class="img-responsive">
+                            {% elif event.kind == 'Study' %}
+                                <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
+                            {% else %}
+                                <img src="/static/img/eiffel.jpg" style = "width:400px; height:300px;" class="img-responsive">   
+                            {% endif %}                            
+                        </a>
+                        <div class="caption">
+                            <h3>{{ event.name }}</h3>
+                            <h4>{{ event.kind }}</h4>
+                            <h4>{{ event.date }}</h4>
+                            <h4>Start Time: {{ event.start_time }}</h4>
+                            <h4>End Time: {{ event.end_time }}</h4>
+                            <h4>Location: {{event.location}}</h4>
+                            <!-- View Details -->
+                            <a href="{% url 'user:event_detail' event.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Album -->
+                            <form action="{% url 'user:delete_event' event.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="event_id" value="{{ event.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-sm-8 col-lg-5">
+                    <div class="thumbnail"  id="transparent">
+                        <div class="caption">
+                        <h2 id="normalLetter">No Events Available~</h2>
+                        </div>
+                    </div>
+    </div>
+    {% endif %}
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+{% endfor %}
+{% endblock %}

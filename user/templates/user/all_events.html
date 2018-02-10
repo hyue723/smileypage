@@ -1,0 +1,74 @@
+{% extends 'user/base.html' %}
+{% block title %}SmileyPage All Events{% endblock %}
+
+{% block username %}{{user.username}}'s SmileyPage -- AllEvents{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <nav class="navbar navbar-default" role = "navigation">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href = "{% url 'user:allevents_past' %}">Past Events</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:allevents_current' %}">Current Events</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:allevents_future' %}">Future Events</a>
+            </li>
+            <li vertical-align="center">
+                <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
+                <input type='text' name = 'q' placeholder = 'Search AllEvents' value = '{{request.GET.q }}'/>
+                <input type = 'submit' value='Search'/>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    {% if events %}
+    {% for event in events %}
+    <div class="col-sm-8 col-lg-3">
+                    <div class="thumbnail"  id="transparent">
+                        <a href="{% url 'user:otherevent_detail' event.id %}">
+                        {% if event.event_photo %}
+                            <img src={{event.event_photo}} class="img-responsive img-border img-left">
+                        {% else %}
+                            {% if event.kind == 'Food' %}
+                                <img src="/static/img/train.jpg" style = "width:400px; height:300px;"  class="img-responsive">
+                            {% elif event.kind == 'Study' %}
+                                <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
+                            {% else %}
+                                <img src="/static/img/eiffel.jpg" style = "width:400px; height:300px;" class="img-responsive">   
+                            {% endif %}
+                        {% endif %}                            
+                        </a>
+                        <div class="caption">
+                            <h3>{{ event.name }}</h3>
+                            <h4>{{ event.kind }}</h4>
+                            <h4>{{ event.date }}</h4>
+                            <h4>Start Time: {{ event.start_time }}</h4>
+                            <h4>End Time: {{ event.end_time }}</h4>
+                            <h4>Location: {{event.location}}</h4>
+                            <!-- View Details -->
+                            <a href="{% url 'user:otherevent_detail' event.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                        </div>
+                    </div>
+
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <div class="col-sm-8 col-lg-5">
+                    <div class="thumbnail"  id="transparent">
+                        <div class="caption">
+                        <h2 id="normalLetter">No Events Available~</h2>
+                        </div>
+                    </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+

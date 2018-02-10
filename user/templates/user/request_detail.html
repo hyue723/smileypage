@@ -1,0 +1,56 @@
+{% extends 'user/base.html' %}
+{% block title %}SmileyPage Message{% endblock %}
+
+{% block username %}{{user.username}}'s SmileyPage -- Friends{% endblock %}
+
+{% block body %}
+<div class="row">
+    <nav class="navbar navbar-default" role = "navigation">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href = "{% url 'user:display_friends' %}">Friends List</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:display_request' %}">Friends Request</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:friends_events' %}">Friends' Events</a>
+            </li>
+            <li>
+                <a href = "{% url 'user:friends_search' %}">All Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="box col-lg-6" >
+        <div class="col-lg-12" >  
+            <hr>
+            <h2 class="intro-text text-center">
+                <strong>Friend Request</strong>
+            </h2>
+            <hr>
+            <hr class="visible-xs">
+            <h3 id='normalLetter'><strong>From:</strong> {{message.from_user.username}}</h3>
+            <h3 id='normalLetter'><strong>To:</strong> {{message.to_user.username}}</h3>
+            {% if message.message %}
+                <h3><strong>Message:</strong></h3>
+                <h4 id='normalLetter' style="display: inline;">{{message.message}}</h4>
+            {% else %}
+                <h3><strong>Message:</strong></h3>
+                <h4 id='normalLetter' style="display: inline;">no specific message</h4>
+            {% endif %}
+
+            {% if message.accepted %}
+                <h4>Accepted</h4>
+            {% elif message.rejected %}
+                <h4>Rejected</h4>
+            {% else %}
+            <a href="{% url 'user:accept_friendship' message.id %}" class="btn btn-primary btn-sm" role="button">Accept</a>
+            <a href="{% url 'user:reject_friendship' message.id %}" class="btn btn-primary btn-sm" role="button" style="display: inline;">Reject</a> 
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
