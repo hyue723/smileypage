@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}SmileyPage Friend Request{% endblock %}
+{% block title %}Connection Request{% endblock %}
 
-{% block username %}{{from_user.username}}'s SmileyPage -- Friend Request{% endblock %}
+{% block username %}{{from_user.username}}'s Homepage -- Connection Request{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>Friend Request From {{from_user.username}} To {{to_user.username}}</h3>
+                    <h3>Connection Request From {{from_user.username}} To {{to_user.username}}</h3>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}

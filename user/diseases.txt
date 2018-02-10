@@ -1,0 +1,43 @@
+acute flaccid myelitis
+anaplasmosis
+anthrax
+babesiosis
+botulism
+brucellosis
+burkholderia mallei
+melioidosis
+campylobacter
+carbapenem-resistant infection
+chancroid
+chikungunya
+chlamydia
+ciguatera
+clostridium difficile infection
+creutzfeldt-jacob disease
+cryptosporidiosis
+cyclosporiasis
+dengue
+diphtheria
+e. coli infection
+eastern equine encephalitis
+ebola
+hepatitis a
+hepatitis b
+hepatitis c
+herpes
+influenza
+lead poisoning
+malaria
+measles
+zika
+chickenpox
+tuberculosis
+meningitis
+mers-cov
+norovirus
+pediculosis
+pertussis
+powassan
+rickettsiosis
+salmonella
+mrsa

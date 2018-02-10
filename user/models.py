@@ -2,31 +2,28 @@ from django.contrib.auth.models import Permission, User
 from django.db import models
 import datetime
 from django.utils import timezone
+# when ever you change things in models, makemigration and migrate
 
 class Profile(models.Model):
-    # UNDERGRADUATE = "Undergraduate Student"
-    # GRADUATE="Graduate Student"
-    # STAFF="Staff"
-    # NONCMU='No in Cmu'
-    # PROFESSOR='Professor'
-    # STATUS_CHOICES = (
-    # (UNDERGRADUATE,"Undergraduate Student"),
-    # (GRADUATE,"Graduate Student"),
-    # (PROFESSOR, 'Professor'),
-    # (STAFF,"School Staff"),
-    # (NONCMU,'Not in CMU'),
-    # )
-    # status_in_cmu = models.CharField( max_length=100,
-    #                                   choices=STATUS_CHOICES,
-    #                                   default=UNDERGRADUATE)
+    MEDICALSTAFF = "Medical Staff"
+    PATIENT="Patient"
+    STATUS_CHOICES = (
+    (MEDICALSTAFF, "Medical Staff"),
+    (PATIENT, "Patient"),
+    )
+    status = models.CharField( max_length=100,
+                                      choices=STATUS_CHOICES,
+                                      default=PATIENT)
+
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE, 
         related_name='profile_user')
-    location = models.CharField(max_length = 100)
+    birthday = models.DateField(default = datetime.date.today)
+    location = models.CharField(max_length = 100, default = '')
     profile_photo = models.FileField()
-    radius = models.PositiveIntegerField()
-    #studying_fields=models.CharField(max_length=500)
-    #facebook_page=models.URLField(blank = True, null=True)
-    #friends = models.ManyToManyField(User, related_name="profile_friends")
+    radius = models.PositiveIntegerField(default = 1000) # in meters
+    connections = models.ManyToManyField(User, related_name="profile_connections")
+
+
 
 class Event(models.Model):
     # FOOD='Food'
@@ -39,22 +36,23 @@ class Event(models.Model):
     #     )
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE, 
         related_name = "event_creator")
-    symptoms = models.CharField(max_length = 140)
+    symptoms = models.CharField(max_length = 500, default='')
+    photo = models.FileField(upload_to='uploads/', blank=True, null=True)
     #kind = models.CharField(max_length=100, choices=KIND_CHOICES, default=FOOD)
     date = models.DateField(default = datetime.date.today)
-    location = models.CharField(max_length = 100)
-    prediction = models.CharField(max_length = 100)
+    location = models.CharField(max_length = 100, default='')
+    prediction = models.TextField(blank=True, null = True)
 
-    def __str__(self):
-        return self.name + "at" + self.location
+    # def __str__(self):
+    #     return self.name + "at" + self.location
 
 
-class FriendshipRequest(models.Model):
+class HelpRequest(models.Model):
     """ Model to represent friendship requests """
     from_user = models.ForeignKey(User, default = 1,on_delete = models.CASCADE, 
-        related_name="FriendshipRequest_user1")
+        related_name="HelpRequest_user1")
     to_user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE,
-        related_name="FriendshipRequest_user2")
+        related_name="HelpRequest_user2")
 
     message = models.TextField(blank=True, null = True)
 
@@ -64,8 +62,8 @@ class FriendshipRequest(models.Model):
     accepted = models.BooleanField(default = False)
 
     class Meta:
-        verbose_name = 'Friendship Request'
-        verbose_name_plural = 'Friendship Requests'
+        verbose_name = 'Help Request'
+        verbose_name_plural = 'Help Requests'
         unique_together = ('from_user', 'to_user')
 
     def __str__(self):
@@ -73,22 +71,20 @@ class FriendshipRequest(models.Model):
             self.to_user_id)
 
 
-class Friend(models.Model):
+class Connection(models.Model):
     """ Model to represent Friendships """
     to_user = models.ForeignKey(User,default = 1, on_delete = models.CASCADE,
-        related_name="Friend_user1")
+        related_name="Connection_user1")
     from_user = models.ForeignKey(User, default = 1,on_delete = models.CASCADE,
-        related_name="Friend_user2")
+        related_name="Connection_user2")
     created = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        verbose_name = 'Friend'
-        verbose_name_plural = 'Friends'
+        verbose_name = 'Connection'
+        verbose_name_plural = 'Connections'
         unique_together = ('from_user', 'to_user')
 
     def __str__(self):
         return "User #%d is friends with #%d" % (self.to_user_id, 
             self.from_user_id)
-
-
 

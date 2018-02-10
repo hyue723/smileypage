@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}SmileyPage All Events{% endblock %}
+{% block title %}Diagnosis All Reportss{% endblock %}
 
-{% block username %}{{user.username}}'s SmileyPage -- AllEvents{% endblock %}
+{% block username %}{{user.username}}'s HomePage -- AllReports{% endblock %}
 
 {% block body %}
 <div class="row">
@@ -9,22 +9,34 @@
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
             <li>
-                <a href = "{% url 'user:allevents_past' %}">Past Events</a>
+                <a href = "{% url 'user:allevents_past' %}">Past Reports</a>
             </li>
-            <li>
-                <a href = "{% url 'user:allevents_current' %}">Current Events</a>
+
             </li>
-            <li>
-                <a href = "{% url 'user:allevents_future' %}">Future Events</a>
-            </li>
+        </ul>
+    </nav>
+
+    <nav class="navbar navbar-default" role = "navigation">
+        <ul class="nav navbar-nav">
             <li vertical-align="center">
                 <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
                 <input type='text' name = 'q' placeholder = 'Search AllEvents' value = '{{request.GET.q }}'/>
                 <input type = 'submit' value='Search'/>
                 </form>
             </li>
+<!--             <li vertical-align="center">
+                <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
+                <input type='text' name = 'l' placeholder = 'Search Location' value = '{{request.GET.l }}'/>
+                <input type = 'submit' value='Search'/>
+                </form>
+            </li> -->
+
+            </li>
         </ul>
     </nav>
+
+
+
 
     {% if events %}
     {% for event in events %}
@@ -34,7 +46,7 @@
                         {% if event.event_photo %}
                             <img src={{event.event_photo}} class="img-responsive img-border img-left">
                         {% else %}
-                            {% if event.kind == 'Food' %}
+<!--                             {% if event.kind == 'Food' %}
                                 <img src="/static/img/train.jpg" style = "width:400px; height:300px;"  class="img-responsive">
                             {% elif event.kind == 'Study' %}
                                 <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
@@ -44,11 +56,11 @@
                         {% endif %}                            
                         </a>
                         <div class="caption">
-                            <h3>{{ event.name }}</h3>
-                            <h4>{{ event.kind }}</h4>
+                            <h3>{{ event.symptoms }}</h3>
+                            <h4>{{ event.prediction }}</h4>
                             <h4>{{ event.date }}</h4>
-                            <h4>Start Time: {{ event.start_time }}</h4>
-                            <h4>End Time: {{ event.end_time }}</h4>
+<!--                             <h4>Start Time: {{ event.start_time }}</h4>
+                            <h4>End Time: {{ event.end_time }}</h4> -->
                             <h4>Location: {{event.location}}</h4>
                             <!-- View Details -->
                             <a href="{% url 'user:otherevent_detail' event.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
@@ -62,7 +74,7 @@
     <div class="col-sm-8 col-lg-5">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                        <h2 id="normalLetter">No Events Available~</h2>
+                        <h2 id="normalLetter">No Records Available~</h2>
                         </div>
                     </div>
     </div>

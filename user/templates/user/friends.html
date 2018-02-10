@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}SmileyPage Friends{% endblock %}
+{% block title %}Connections{% endblock %}
 
-{% block username %}{{user.username}}'s SmileyPage -- Friends{% endblock %}
+{% block username %}{{user.username}}'s Homepage -- Connections{% endblock %}
 
 {% block body %}
 
@@ -10,14 +10,14 @@
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
             <li>
-                <a href = "{% url 'user:display_friends' %}">Friends List</a>
+                <a href = "{% url 'user:display_friends' %}">Connections List</a>
             </li>
             <li>
-                <a href = "{% url 'user:display_request' %}">Friends Request</a>
+                <a href = "{% url 'user:display_request' %}">Connections Request</a>
             </li>
-            <li>
+<!--             <li>
                 <a href = "{% url 'user:friends_events' %}">Friends' Events</a>
-            </li>
+            </li> -->
             <li>
                 <a href = "{% url 'user:friends_search' %}">All Users</a>
             </li>
@@ -30,15 +30,15 @@
         </ul>
     </nav>
 
-    {% if friends %}
-    {% for friend in friends %}
+    {% if connections %}
+    {% for connection in connections %}
     <div class="col-sm-8 col-lg-3">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                            <h3>{{ friend.username }}</h3>
-                            <h4>{{ friend.status_in_cmu }}</h4>
-                            <a href="{% url 'user:user_detail' friend.id %}" class="btn btn-primary btn-sm" role="button">View Profile</a>
-                            <form action="{% url 'user:delete_friend' friend.id %}" method="post" style="display: inline;">
+                            <h3>{{ connection.username }}</h3><!-- 
+                            <h4>{{ connection.status_in_cmu }}</h4> -->
+                            <a href="{% url 'user:user_detail' connection.id %}" class="btn btn-primary btn-sm" role="button">View Profile</a>
+                            <form action="{% url 'user:delete_connection' connection.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="event_id" value="{{ event.id }}" />
                                 <button type="submit" class="btn btn-default btn-sm">
@@ -54,7 +54,7 @@
     <div class="col-sm-8 col-lg-5">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                        <h2 id="normalLetter">No Friends Available~</h2>
+                        <h2 id="normalLetter">No connections Available~</h2>
                         </div>
                     </div>
     </div>

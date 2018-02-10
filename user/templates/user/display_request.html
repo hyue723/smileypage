@@ -8,16 +8,16 @@
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
             <li>
-                <a href = "{% url 'user:display_friends' %}">Friends List</a>
+                <a href = "{% url 'user:display_friends' %}">Connections List</a>
             </li>
             <li>
-                <a href = "{% url 'user:display_request' %}">Friends Request</a>
+                <a href = "{% url 'user:display_request' %}">Connections Request</a>
             </li>
+<!--             <li>
+                <a href = "{% url 'user:friends_events' %}">Connections' Events</a>
+            </li> -->
             <li>
-                <a href = "{% url 'user:friends_events' %}">Friends' Events</a>
-            </li>
-            <li>
-                <a href = "{% url 'user:friends_search' %}">Find New Friends</a>
+                <a href = "{% url 'user:friends_search' %}">Find New Connections</a>
             </li>
         </ul>
     </nav>
@@ -54,7 +54,7 @@
     <div class="col-sm-8 col-lg-4">
         <div class="thumbnail"  id="transparent">
             <div class="caption">
-                <h2 id='normalLetter'>No Received Friend Request</h2>
+                <h2 id='normalLetter'>No Received Connection Request</h2>
             </div>
         </div>
     </div>
@@ -89,7 +89,7 @@
     <div class="col-sm-8 col-lg-4">
         <div class="thumbnail"  id="transparent">
             <div class="caption">
-                <h2 id='normalLetter'>No Sent Friend Request</h2>
+                <h2 id='normalLetter'>No Sent Connection Request</h2>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
-{% block title %}SmileyPage User Detail{% endblock %}
+{% block title %}User Detail{% endblock %}
 
-{% block username %}{{user.username}}'s SmileyPage{% endblock %}
+{% block username %}{{user.username}}'s Homepage{% endblock %}
 
 {% block body %}
 <body>
@@ -9,16 +9,16 @@
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
             <li>
-                <a href = "{% url 'user:display_friends' %}">Friends List</a>
+                <a href = "{% url 'user:display_friends' %}">Connections List</a>
             </li>
             <li>
-                <a href = "{% url 'user:display_request' %}">Friends Request</a>
+                <a href = "{% url 'user:display_request' %}">Connections Request</a>
             </li>
-            <li>
+<!--             <li>
                 <a href = "{% url 'user:friends_events' %}">Friends' Events</a>
-            </li>
+            </li> -->
             <li>
-                <a href = "{% url 'user:friends_search' %}">Find New Friends</a>
+                <a href = "{% url 'user:friends_search' %}">Find New Connections</a>
             </li>
         </ul>
     </nav>
@@ -35,22 +35,20 @@
                 {% for profile in profiles %}
                 <img src={{profile.profile_photo.url}} class="img-responsive img-border img-left">   
                 <hr class="visible-xs">
-                <h3 style="position:relative; top: 10px;">Interests: {{profile.interest}}</h3>
-                <h3 id="normalLetter">Status in CMU: {{profile.status_in_cmu}}</h3>
-                <h3 id="normalLetter">Studying Fields: {{profile.studying_fields}}</h3>
-                {% if profile.facebook_page %}
+                <h3 style="position:relative; top: 10px;">Location: {{profile.location}}</h3>
+<!--                 {% if profile.facebook_page %}
                 <h3 style="padding-left:10px" id="normalLetter">Facebook Page: <a id="normalLetter" href = {{profile.facebook_page}}><img src = '/static/img/Facebook.png' style = 'width:100px; height:50px;'></a></h3>
-                {% endif %}
+                {% endif %} -->
                 {% endfor %}
                 {% endif %}
 
 
-                {% if friended %}
-                    <h3> You are friends with each other~ </h3>
+                {% if connected %}
+                    <h3> You are connected with each other. </h3>
                 {% elif message %}
-                    <h3> Friendship Requested</h3>
+                    <h3> Connection Requested</h3>
                 {% else %}
-                    <a href="{% url 'user:send_request' other_user.id %}">Add Friend</a>
+                    <a href="{% url 'user:send_request' other_user.id %}">Add Connection</a>
                 {% endif %}
             </div>
         </div>
