@@ -34,7 +34,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['symptoms', 'date', 'location', 'prediction']
+        fields = ['symptoms', 'date', 'location', 'photo']
         widgets = {
             'date': SelectDateWidget(),
             # 'end_time': forms.TimeInput(format='%H:%M'),
@@ -43,6 +43,7 @@ class EventForm(forms.ModelForm):
         labels = {
             'symptoms':_('Description'),
             'date':_("Date"),
+            'photo':_('Phote of symptoms'),
             'location':_('Location'),
             }
 
