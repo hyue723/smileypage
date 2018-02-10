@@ -1,4 +1,4 @@
-# smileypage
+# Diagloot
 A free health diagnosis web app
 
 Project Name: Diagloot
