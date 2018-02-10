@@ -23,12 +23,12 @@
         <div class="panel panel-default" id="transparent">
             <img src = '{{ profile.profile_photo.url}}' class = "img-responsive img-rounded" >
             <h3 style="padding-left:10px"id="normalLetter">Username: {{user.username}}</h3>
-            <h3 style="padding-left:10px" id="normalLetter">Interests: {{profile.interest}}</h3>
-            <h3 style="padding-left:10px" id="normalLetter">Status in CMU: {{profile.status_in_cmu}}</h3>
-            <h3 style="padding-left:10px" id="normalLetter">Studying Fields: {{profile.studying_fields}}</h3>
-            {% if profile.facebook_page %}
+            <h3 style="padding-left:10px" id="normalLetter">Radius: {{profile.radius}}</h3>
+            <h3 style="padding-left:10px" id="normalLetter">Status: {{profile.status}}</h3>
+            <h3 style="padding-left:10px" id="normalLetter">Location: {{profile.location}}</h3>
+ <!--            {% if profile.facebook_page %}
             <h3 style="padding-left:10px" id="normalLetter">Facebook Page: <a id="normalLetter" href = {{profile.facebook_page}}><img src = '/static/img/Facebook.png' style = 'width:100px; height:50px;'></a></h3>
-            {% endif %}
+            {% endif %} -->
             <a style="padding-left:10px" href="{% url 'user:edit_profile' %}" class='btn btn-primary btn-sm' role='button'>Click Here to Edit Profile</a>
         </div>
     </div>
@@ -36,7 +36,7 @@
     <div class = "col-sm-8">
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
-            <li>
+<!--             <li>
                 <a href = "{% url 'user:myevents_past' %}">Past Events</a>
             </li>
             <li>
@@ -44,9 +44,9 @@
             </li>
             <li>
                 <a href = "{% url 'user:myevents_future' %}">Future Events</a>
-            </li>
+            </li> -->
             <li>
-            <a href="{% url 'user:create_event' %}">Create A New Event</a>
+            <a href="{% url 'user:create_event' %}">Add New Record</a>
             </li>
         </ul>
     </nav>
@@ -58,20 +58,20 @@
     <div class="col-sm-8 col-lg-4">
                     <div class="thumbnail"  id="transparent">
                         <a href="{% url 'user:event_detail' event.id %}">
-                            {% if event.kind == 'Food' %}
+<!--                             {% if event.kind == 'Food' %}
                                 <img src="/static/img/train.jpg" style = "width:400px; height:300px;" class="img-responsive">
                             {% elif event.kind == 'Study' %}
                                 <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
                             {% else %}
                                 <img src="/static/img/eiffel.jpg" style = "width:400px; height:300px;" class="img-responsive">   
-                            {% endif %}                            
+                            {% endif %}  -->                           
                         </a>
                         <div class="caption">
-                            <h3>{{ event.name }}</h3>
-                            <h4>{{ event.kind }}</h4>
+<!--                             <h3>{{ event.name }}</h3>
+                            <h4>{{ event.kind }}</h4> -->
                             <h4>{{ event.date }}</h4>
-                            <h4>Start Time: {{ event.start_time }}</h4>
-                            <h4>End Time: {{ event.end_time }}</h4>
+                            <h4>Symptoms: {{ event.symptoms }}</h4>
+                            <h4>Prediction: {{ event.prediction}}</h4>
                             <h4>Location: {{event.location}}</h4>
                             <!-- View Details -->
                             <a href="{% url 'user:event_detail' event.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
@@ -93,7 +93,7 @@
     <div class="col-sm-8 col-lg-5">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                        <h2 id="normalLetter">No Events Available~</h2>
+                        <h2 id="normalLetter">No Records Available~</h2>
                         </div>
                     </div>
     </div>

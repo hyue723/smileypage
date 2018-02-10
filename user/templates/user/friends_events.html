@@ -8,14 +8,14 @@
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
             <li>
-                <a href = "{% url 'user:display_friends' %}">Friends List</a>
+                <a href = "{% url 'user:display_friends' %}">Connections List</a>
             </li>
             <li>
-                <a href = "{% url 'user:display_request' %}">Friends Request</a>
+                <a href = "{% url 'user:display_request' %}">Connections Request</a>
             </li>
-            <li>
+<!--             <li>
                 <a href = "{% url 'user:friends_events' %}">Friends' Events</a>
-            </li>
+            </li> -->
             <li>
                 <a href = "{% url 'user:friends_search' %}">All Users</a>
             </li>
@@ -23,7 +23,7 @@
     </nav>
     <nav class="navbar navbar-default" role = "navigation">
         <ul class="nav navbar-nav">
-            <li>
+<!--             <li>
                 <a href = "{% url 'user:friends_events_past' %}">Past Events</a>
             </li>
             <li>
@@ -31,7 +31,7 @@
             </li>
             <li>
                 <a href = "{% url 'user:friends_events_future' %}">Future Events</a>
-            </li>
+            </li> -->
             <li vertical-align="center">
                 <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
                 <input type='text' name = 'q' placeholder = 'Search Friends Events' value = '{{request.GET.q }}'/>
@@ -48,20 +48,20 @@
     <div class="col-sm-8 col-lg-3">
                     <div class="thumbnail"  id="transparent">
                         <a href="{% url 'user:otherevent_detail' event.id %}">
-                            {% if event.kind == 'Food' %}
+<!--                             {% if event.kind == 'Food' %}
                                 <img src="/static/img/train.jpg" style = "width:400px; height:300px;" class="img-responsive">
                             {% elif event.kind == 'Study' %}
                                 <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
                             {% else %}
                                 <img src="/static/img/eiffel.jpg"style = "width:400px; height:300px;"  class="img-responsive">   
-                            {% endif %}                            
+                            {% endif %}  -->                           
                         </a>
                         <div class="caption">
-                            <h3>{{ event.name }}</h3>
-                            <h4>{{ event.kind }}</h4>
+                            <h3>{{ event.symptoms }}</h3>
+                            <h4>{{ event.prediction }}</h4>
                             <h4>{{ event.date }}</h4>
-                            <h4>Start Time: {{ event.start_time }}</h4>
-                            <h4>End Time: {{ event.end_time }}</h4>
+<!--                             <h4>Start Time: {{ event.start_time }}</h4>
+                            <h4>End Time: {{ event.end_time }}</h4> -->
                             <h4>Location: {{event.location}}</h4>
                             <!-- View Details -->
                             <a href="{% url 'user:otherevent_detail' event.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
@@ -75,7 +75,7 @@
     <div class="col-sm-8 col-lg-5">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                        <h2 id="normalLetter">No Events Available~</h2>
+                        <h2 id="normalLetter">No Records Available~</h2>
                         </div>
                     </div>
     </div>

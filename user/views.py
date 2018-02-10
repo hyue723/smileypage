@@ -1,17 +1,17 @@
+from .predict import *
+from .imageClassify import *
+
 from django.views import generic
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, logout, login
 from django.views.generic import View
-from .forms import UserForm, ProfileForm, EventForm, FriendshipRequestForm
+from .forms import UserForm, ProfileForm, EventForm, HelpRequestForm
 from django.template import loader
-from .models import Event, Profile, User, Friend, FriendshipRequest
+from .models import Event, Profile, User, Connection, HelpRequest
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 import datetime
 from django.db.models import Q
-import scripts.predict
-import scripts.imageClassify
-
 
 def register(request):
     form = UserForm(request.POST or None)
@@ -19,6 +19,7 @@ def register(request):
         user = form.save(commit=False)
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
+        # email = form.cleaned_data['email']
         user.set_password(password)
         user.save()
         user = authenticate(username = username, password = password)
@@ -70,12 +71,9 @@ def display_profile(request):
         events = Event.objects.filter(user=request.user).order_by('-date')
         query = request.GET.get("q")
         if query:
-            events = events.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events = events.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
-                                   Q(kind__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)).distinct()
         return render(request, 'user/profile.html', {'profiles':profiles, 
             'user':user, 'events':events})
@@ -104,20 +102,14 @@ def all_events(request):
         events = Event.objects.all().order_by('-date')
         query = request.GET.get("q")
         if query:
-            events = events.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events = events.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {"events":events, 'user':user}
     return render(request, 'user/all_events.html', context)
-
-
-
 
 
 
@@ -190,13 +182,10 @@ def myevents_current(request):
         events_mine = Event.objects.filter(user=user).order_by('-date')
         events=events_mine.filter(date=datetime.date.today()).order_by('-date')
         if query:
-            events =events_mine.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_mine.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user, 'profiles':profiles}
@@ -213,13 +202,10 @@ def myevents_past(request):
         events=events_mine.filter(date__lt=datetime.date.today()
             ).order_by('-date')
         if query:
-            events =events_mine.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_mine.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user, 'profiles':profiles}
@@ -236,13 +222,10 @@ def myevents_future(request):
         events=events_mine.filter(date__gt=datetime.date.today()
             ).order_by('-date')
         if query:
-            events =events_mine.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_mine.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user, 'profiles':profiles}
@@ -257,13 +240,10 @@ def allevents_current(request):
         events_all = Event.objects.all().order_by('-date')
         events=events_all.filter(date=datetime.date.today()).order_by('-date')
         if query:
-            events =events_all.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_all.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user}
@@ -279,13 +259,10 @@ def allevents_past(request):
             ).order_by('-date')
         query = request.GET.get("q")
         if query:
-            events =events_all.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_all.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user}
@@ -301,13 +278,10 @@ def allevents_future(request):
             ).order_by('-date')
         query = request.GET.get("q")
         if query:
-            events =events_all.filter(Q(name__icontains=query) |
-                                   Q(description__icontains=query)  |
+            events =events_all.filter(Q(symptoms__icontains=query) |
                                    Q(date__icontains=query)  | 
-                                   Q(start_time__icontains=query)| 
-                                   Q(end_time__icontains=query)|
+                                   Q(prediction__icontains=query)|
                                    Q(location__icontains=query)|
-                                   Q(kind__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
         context = {'events':events, 'user':user}
@@ -318,7 +292,7 @@ def request_detail(request, message_id):
         return HttpResponseRedirect(reverse('user:login'))
     else:
         user=request.user
-        message = get_object_or_404(FriendshipRequest, id=message_id)
+        message = get_object_or_404(HelpRequest, id=message_id)
         message.viewed=True
         message.save()
         context = {'user':user, "message":message}
@@ -329,7 +303,7 @@ def request_detail_sent(request, message_id):
         return HttpResponseRedirect(reverse('user:login'))
     else:
         user=request.user
-        message = get_object_or_404(FriendshipRequest, id=message_id)
+        message = get_object_or_404(HelpRequest, id=message_id)
         context = {'user':user, "message":message}
         return render (request, 'user/request_detail_sent.html', context) 
 
@@ -351,13 +325,13 @@ def user_detail(request, user_id):
         user=request.user
         other_user=get_object_or_404(User, id=user_id)
         profiles = Profile.objects.filter(user=other_user)
-        friendships = Friend.objects.filter(from_user=user)
-        message = FriendshipRequest.objects.filter(Q(from_user=user, 
+        connections = Connection.objects.filter(from_user=user)
+        message = HelpRequest.objects.filter(Q(from_user=user, 
             to_user = other_user)|
                         Q(to_user=user, from_user = other_user)).distinct()
-        friended = friendships.filter(to_user=other_user)
+        connected = connections.filter(to_user=other_user)
         context={'user':user, 'other_user':other_user, 'profiles':profiles, 
-        'friended':friended, 'message':message}
+        'connected':connected, 'message':message}
         return render(request, 'user/user_detail.html', context)
 
 def friends_search(request):
@@ -370,10 +344,9 @@ def friends_search(request):
         query = request.GET.get("q")
         if query:
             profiles = profiles.filter(Q(user__username__icontains=query) |
-                                   Q(interest__icontains=query)  |
-                                   Q(status_in_cmu__icontains=query)  | 
-                                   Q(user__email__icontains=query)| 
-                        Q(studying_fields__icontains=query)).distinct()
+                                   Q(location__icontains=query)  |
+                                   Q(status__icontains=query)  | 
+                                   Q(user__email__icontains=query)).distinct()
 
         context = {'user':user, 'users':users, 'profiles':profiles}
         return render(request, 'user/friends_search.html', context)
@@ -386,10 +359,10 @@ def friends_events_current(request):
     else:
         user = request.user
         profile =get_object_or_404(Profile, user=user)
-        friends = profile.friends.all()
+        connections = profile.connections.all()
         events = set()
-        for friend in friends:
-            events=events.union(Event.objects.filter(user=friend, 
+        for connection in connections:
+            events=events.union(Event.objects.filter(user=connection, 
                 date=datetime.date.today()))
         context = {'events':events, 'user':user}
         return render(request, 'user/friends_events.html', context)
@@ -400,10 +373,10 @@ def friends_events_past(request):
     else:
         user = request.user
         profile =get_object_or_404(Profile, user=user)
-        friends = profile.friends.all()
+        connections = profile.connections.all()
         events = set()
-        for friend in friends:
-            events=events.union(Event.objects.filter(user=friend, 
+        for connection in connections:
+            events=events.union(Event.objects.filter(user=connection, 
                 date__lt=datetime.date.today()))
         context = {'events':events, 'user':user}
         return render(request, 'user/friends_events.html', context)
@@ -414,10 +387,10 @@ def friends_events_future(request):
     else:
         user = request.user
         profile =get_object_or_404(Profile, user=user)
-        friends = profile.friends.all()
+        connections = profile.connections.all()
         events = set()
-        for friend in friends:
-            events=events.union(Event.objects.filter(user=friend,
+        for connection in connections:
+            events=events.union(Event.objects.filter(user=connection,
                 date__gt=datetime.date.today()))
         context = {'events':events, 'user':user}
         return render(request, 'user/friends_events.html', context)
@@ -427,13 +400,13 @@ def send_request(request, user_id):
         return HttpResponseRedirect(reverse('user:login'))
     else:
         to_user = get_object_or_404(User, pk = user_id)
-        form = FriendshipRequestForm(request.POST or None)
+        form = HelpRequestForm(request.POST or None)
         from_user = request.user
         if form.is_valid():
-            friendship = form.save(commit = False)
-            friendship.from_user = from_user
-            friendship.to_user= to_user
-            friendship.save()
+            connection = form.save(commit = False)
+            connection.from_user = from_user
+            connection.to_user= to_user
+            connection.save()
             return HttpResponseRedirect(reverse('user:user_detail', 
                 args = (to_user.id,)))
         context = {'form':form, 'to_user':to_user, 'from_user':from_user}
@@ -445,9 +418,9 @@ def display_request(request):
         return HttpResponseRedirect(reverse('user:login'))
     else:
         user=request.user
-        received=FriendshipRequest.objects.filter(to_user=user).order_by(
+        received=HelpRequest.objects.filter(to_user=user).order_by(
             '-created')
-        sent=FriendshipRequest.objects.filter(from_user=user).order_by(
+        sent=HelpRequest.objects.filter(from_user=user).order_by(
             '-created')
         context = {'user':user, 'received':received, 'sent':sent}
         return render(request, 'user/display_request.html', context)
@@ -460,13 +433,13 @@ def display_friends(request):
     else:
         user = request.user
         profile = get_object_or_404(Profile, user=user)
-        friends = profile.friends.all()
+        connections = profile.connections.all()
         query = request.GET.get("q")
-        requests = FriendshipRequest.objects.filter(to_user=user)
+        requests = HelpRequest.objects.filter(to_user=user)
         if query:
-            friends = friends.filter(Q(username__icontains=query) |
+            connections = connections.filter(Q(username__icontains=query) |
                                    Q(email__icontains=query)).distinct()
-        context = {'friends':friends, 'requests':requests, 'user':user}
+        context = {'connections':connections, 'requests':requests, 'user':user}
         return render(request, 'user/friends.html', context)
 
 
@@ -504,7 +477,7 @@ def accept_friendship(request, message_id):
         return render(request, 'user/login.html')
     else:
         user = request.user
-        message = get_object_or_404(FriendshipRequest, pk = message_id)
+        message = get_object_or_404(HelpRequest, pk = message_id)
         message.viewed = True
         message.accepted = True
         message.save()
@@ -530,7 +503,7 @@ def reject_friendship(request, message_id):
         return render(request, 'user/login.html')
     else:
         user = request.user
-        message = get_object_or_404(FriendshipRequest, pk = message_id)
+        message = get_object_or_404(HelpRequest, pk = message_id)
         message.viewed = True
         message.rejected = True
         message.save()
@@ -542,7 +515,7 @@ def friend_request_detail(request, friend_request_id):
         return render(request, 'user/login.html')
     else:
         user = request.user
-        messages = FriendshipRequest.objects.filter(id=friend_request_id)
+        messages = HelpRequest.objects.filter(id=friend_request_id)
         context = {'user':user, "messages": messages}
         return render(request, "user/request_message.html", context)
 
@@ -557,9 +530,9 @@ def delete_friend(request, user_id):
         relation.delete()
         relation_reverse = Friend.objects.filter(to_user=user,from_user=friend)
         relation_reverse.delete()
-        message=FriendshipRequest.objects.filter(from_user=user,to_user=friend)
+        message=HelpRequest.objects.filter(from_user=user,to_user=friend)
         message.delete()
-        message_reverse = FriendshipRequest.objects.filter(to_user = user,
+        message_reverse = HelpRequest.objects.filter(to_user = user,
             from_user=friend)
         message_reverse.delete()
         user_profile=get_object_or_404(Profile, user=user)
