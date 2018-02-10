@@ -121,12 +121,12 @@ def create_event(request):
         if form.is_valid():
             event = form.save(commit = False)
             event.user = request.user
-            # prediction = predict(event.symptoms)
-            # result = ""
-            # # create a table later on
-            # disease, p = prediction[0]
-            # prob = exp(p) *  100
-            result = "Disease is " + event.symptoms + "with %.2f percent probability"%(10)
+            prediction = predict(event.symptoms)
+            result = ""
+            # create a table later on
+            disease, p = prediction[0]
+            prob = (math.e**p) *  100
+            result = "Disease is " + disease + "with %.2f percent probability"%(abs(p))
             event.prediction = result
             event.save()
             events = Event.objects.filter(user=request.user)

@@ -1,5 +1,8 @@
 import math, re, os
- 
+
+__location__ = os.path.realpath(
+os.path.join(os.getcwd(), os.path.dirname(__file__)))
+	
 FILEPATH = "result.txt"
 ALPHA = 0.1
 V = 500
@@ -26,7 +29,7 @@ def tokenizeDoc(cur_doc):
 	return re.findall('\\w+', cur_doc)
 
 def populateD(): #Note: write count result to stdout
-	f = open(FILEPATH, 'r')
+	f = f = open(os.path.join(__location__, 'result.txt'), 'r')
 
 	line = f.readline()
 	while line:

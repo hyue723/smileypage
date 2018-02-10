@@ -2,9 +2,10 @@ from .classify import *
 import string
 
 def parse(input_s):
-    return input_s.translate(None, string.punctuation).lower()
+    translator = str.maketrans('', '', string.punctuation)
+    return input_s.translate(translator).lower()
 
 def predict(input_text):
     input_text = parse(input_text)
-    classify.populateD()
-    return classify.classifyDoc(input_text)[:5]
+    populateD()
+    return classifyDoc(input_text)[:5]
