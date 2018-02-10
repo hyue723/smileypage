@@ -74,11 +74,11 @@
 
       <!--<div id="popup" title="Welcome to OpenLayers"></div>-->
     </div>
-    <script>
+    <<script src="jquery-1.12.0.min.js">
       var layer = new ol.layer.Tile({
         source: new ol.source.OSM()
       });
-      //var locations = {{ locations || safe }};
+      // var locations = {{ locations || safe }};
       locations = ["cough 16.2807333 -16.53877326", 
                    "fever 3.34559232 8.65413288",
                    "fever 8.49563241 10.65041661"];
@@ -152,7 +152,7 @@
         });
         $(element).popover('show');
       });
-    </script>
+    </script>>
   </body>
 </html>
 

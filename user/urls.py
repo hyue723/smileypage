@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^profile/my_events/past/$', views.myevents_past,name="myevents_past"),
     url(r'^profile/my_events/future/$', views.myevents_future,
         name="myevents_future"),
+    url(r'^profile/disease_control/$', views.aggregateUserData, 
+        name="disease_control"),
     url(r'^all_events/current/$', views.allevents_current, 
         name="allevents_current"),
     url(r'^all_events/past/$', views.allevents_past, name="allevents_past"),

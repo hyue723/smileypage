@@ -116,6 +116,9 @@ def all_events(request):
                                    Q(location__icontains=query)|
                             Q(user__username__icontains=query)).distinct()
             events=events.order_by('-date')
+        query2 = request.GET.get("l")
+        if query2:
+            render(request, '')
         context = {"events":events, 'user':user}
     return render(request, 'user/all_events.html', context)
 
@@ -577,7 +580,7 @@ def parse(input_s):
 API_KEY = "AIzaSyCBsS-L1dORWZQM45rIVd-9wjCqzbxc5jI"
 
 def standardize(address):
-    return string.replace(' '.join(address.split()), ' ', '+')
+    return (' '.join(address.split())).replace(' ', '+')
 
 def measure(lat1, lon1, lat2, lon2):
     R = 6378.137
@@ -618,8 +621,8 @@ def aggregateDataWithinRange(location, radius):
     return tmp
 
 def aggregateUserData(request):
-    query = request.GET.get("q")
-    if not query: return []
+    # query = request.GET.get("l")
+    # # if not query: return []
     user = Profile.objects.get(user=request.user)
     events = Event.objects.filter(user=request.user).order_by('-date')
     location = user.location

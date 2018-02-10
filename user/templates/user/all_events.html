@@ -11,20 +11,32 @@
             <li>
                 <a href = "{% url 'user:allevents_past' %}">Past Reports</a>
             </li>
+
+            </li>
+        </ul>
+    </nav>
+
+    <nav class="navbar navbar-default" role = "navigation">
+        <ul class="nav navbar-nav">
             <li vertical-align="center">
                 <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
                 <input type='text' name = 'q' placeholder = 'Search AllEvents' value = '{{request.GET.q }}'/>
                 <input type = 'submit' value='Search'/>
                 </form>
-<!--             </li>
-            <li vertical-align="center"> -->
+            </li>
+            <li vertical-align="center">
                 <form method = 'GET' action='' style="padding-top:32px;padding-left: 30px">
                 <input type='text' name = 'l' placeholder = 'Search Location' value = '{{request.GET.l }}'/>
                 <input type = 'submit' value='Search'/>
                 </form>
             </li>
+
+            </li>
         </ul>
     </nav>
+
+
+
 
     {% if events %}
     {% for event in events %}
@@ -40,7 +52,7 @@
                                 <img src="/static/img/travel.jpg" style = "width:400px; height:300px;" class="img-responsive"> 
                             {% else %}
                                 <img src="/static/img/eiffel.jpg" style = "width:400px; height:300px;" class="img-responsive">   
-                            {% endif %} -->
+                            {% endif %}
                         {% endif %}                            
                         </a>
                         <div class="caption">
