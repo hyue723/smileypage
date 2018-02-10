@@ -1,6 +1,9 @@
 # Diagloot
 A free health diagnosis web app
 
+## Introduction Video:
+https://youtu.be/_Rjg1im6qE8
+
 ## Goal: 
 Provide free diagnosis for users based on their symptoms submitted by either text or photos. The final goal is to predict serious regional infectious disease before it goes out of control.
 
