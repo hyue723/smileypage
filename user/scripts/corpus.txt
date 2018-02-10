@@ -1,0 +1,44 @@
+1	acute flaccid myelitis	facial droop/weakness difficulty moving the eyes drooping eyelids difficulty moving the eyes difficulty with swallowing or slurred speech
+1	anaplasmosis	 fever headache chills muscle aches
+1	anthrax	fever and chills chest discomfort shortness of breath confusion or dizziness cough nausea vomiting stomach pains headache sweats drenching extreme tiredness body aches
+1	babesiosis	fatigue fever malaise jaundice and anemia
+1	botulism 	difficulty swallowing or speaking dry mouth facial weakness on both sides of the face blurred or double vision drooping eyelids trouble breathing nausea vomiting abdominal cramps paralysis constipation infant tiredness
+1	brucellosis 	fever chills loss of appetite sweats weakness fatigue joint muscle back pain headache
+1	burkholderia mallei	mucus-containing nasal discharge lung lesions nodules around liver spleen
+1	melioidosis	cough with normal sputum the mixture of saliva and mucus that can rise into the throat from coughing no sputum called a nonproductive cough chest pain during breathing high fever headache and general muscle soreness weight loss
+1	campylobacter	diarrhea bloody fever nausea vomiting abdominal pain headache muscle pain
+1	carbapenem-resistant infection	urinary tract infection cyanosis sepsis pneumonia fever septic shock low blood pressure
+1	chancroid	bump papule pus eroded ragged edges ulcer soft soft chancre painful lymph glands groin
+1	chikungunya	headache muscle pain joint swelling rash fever joint pain
+1	chlamydia	discharge from penis burning itching rectal pain bleeding lower abdominal pain low back pain, nausea fever pain during intercourse bleeding between periods
+1	ciguatera	nausea vomiting diarrhea muscle pain numbness tingling abdominal pain dizziness vertigo
+1	clostridium difficile infection	watery diarrhea three or more times a day for two or more days mild abdominal cramping tenderness rapid heart rate fever blood or pus in the stool nausea dehydration loss of appetite weight loss swollen abdomen kidney failure increased white blood cell count
+1	creutzfeldt-jacob disease	personality changes anxiety depression memory loss impaired thinking blurred vision or blindness insomnia difficulty speaking difficulty swallowing sudden jerky movements
+1	cryptosporidiosis 	watery diarrhea dehydration lack of appetite weight loss stomach cramps or pain fever nausea vomiting
+1	cyclosporiasis	frequent, watery diarrhea bouts of diarrhea alternating with bouts of constipation loss of appetite and weight loss bloating flatulence and burping stomach cramps nausea vomiting muscle aches fever fatigue unwell malaise
+1	dengue	headache muscle bone joint pain nausea vomiting pain behind the eyes swollen glands rash
+1	diphtheria	thick gray membrane covering throat tonsils a sore throat and hoarseness swollen glands enlarged lymph node in neck difficulty breathing or rapid breathing nasal discharge fever and chills malaise
+1	e. coli infection	diarrhea mild watery severe bloody abdominal cramping pain tenderness nausea vomiting
+1	eastern equine encephalitis	 fever headache irritability restlessness drowsiness anorexia vomiting diarrhea cyanosis convulsions coma
+1	ebola	fever severe headache muscle pain weakness fatigue diarrhea vomiting abdominal (stomach) pain unexplained bleedg or bruising
+1	hepatitis a	fever fatigue loss of appetite nausea vomiting abdominal pain dark-colored urine clay-colored stool joint pain jaundice yellow of skin eyes
+1	hepatitis b	fever fatigue loss of appetite nausea vomiting abdominal pain dark-colored urine clay-colored stool joint pain jaundice yellow skin eyes
+1	hepatitis c	appetite abdominal discomfort joint pain nausea vomiting, yellowing of the skin and eyes jaundice dark urine clay-colored stool fever fatigue
+1	herpes	pain itching small red bumps tiny white blister ulcer scab
+1	influenza	fever f 38 c aching muscles back arms legs chills sweats headache dry persistent cough fatigue weakness nasal congestion sore throat
+1	lead poisoning	developmental delay learning difficulties irritable loss of appetite weight loss sluggishness and fatigue abdominal pain vomiting constipation hearing loss seizures eating food
+1	malaria	moderate severe shaking chills high fever sweating headache vomiting diarrhea
+1	measles	high fever cough runny nose red watery eyes tiny white spots inside mouth inner lining of  cheek koplik spots rash large flat blotches
+4	zika	fever rash joint pain headache muscle pain conjunctivitis pink eye
+4432	chickenpox	itchy skin blister lesion rash
+5345	tuberculosis	fever weakness fatigue unexpected weight loss loss of appetite night sweats persistent coughing coughing blood  chest pain shortness breath
+7189	meningitis	high fever headache vomiting stiff neck rash body aches/joint pain nausea/vomiting increased sensitivity to light confusion
+7282	mers-cov	fever cough shortness breath pneumonia diarrhea kidney failure mild respiratory illness
+3817	norovirus	diarrhea vomiting stomach pain dehydration
+1374	pediculosis	tickling moving hair  irritability sleeplessness allergic lice
+3179	pertussis	cold-like coughing sneezing runny nose spit up 
+vomit exhausted whoop sound
+3142	powassan	fever headache vomiting weakness confusion loss coordination speech difficulties seizures recurrent muscle wasting memory problems
+1499	rickettsiosis	tick bite painless sudden fever headache rash headache nausea vomiting abdominal pain muscle lack appetite red eyes
+4361	salmonella	diarrhea fever abdominal cramps
+4792	mrsa	pustules boils red swollen painful pus drainage spider bites bumps skin trauma cuts abrasions back neck groin buttock armpit beard 
