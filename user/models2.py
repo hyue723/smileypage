@@ -4,46 +4,48 @@ import datetime
 from django.utils import timezone
 
 class Profile(models.Model):
-    # UNDERGRADUATE = "Undergraduate Student"
-    # GRADUATE="Graduate Student"
-    # STAFF="Staff"
-    # NONCMU='No in Cmu'
-    # PROFESSOR='Professor'
-    # STATUS_CHOICES = (
-    # (UNDERGRADUATE,"Undergraduate Student"),
-    # (GRADUATE,"Graduate Student"),
-    # (PROFESSOR, 'Professor'),
-    # (STAFF,"School Staff"),
-    # (NONCMU,'Not in CMU'),
-    # )
-    # status_in_cmu = models.CharField( max_length=100,
-    #                                   choices=STATUS_CHOICES,
-    #                                   default=UNDERGRADUATE)
+    UNDERGRADUATE = "Undergraduate Student"
+    GRADUATE="Graduate Student"
+    STAFF="Staff"
+    NONCMU='No in Cmu'
+    PROFESSOR='Professor'
+    STATUS_CHOICES = (
+    (UNDERGRADUATE,"Undergraduate Student"),
+    (GRADUATE,"Graduate Student"),
+    (PROFESSOR, 'Professor'),
+    (STAFF,"School Staff"),
+    (NONCMU,'Not in CMU'),
+    )
+    status_in_cmu = models.CharField( max_length=100,
+                                      choices=STATUS_CHOICES,
+                                      default=UNDERGRADUATE)
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE, 
         related_name='profile_user')
-    location = models.CharField(max_length = 100)
-    profile_photo = models.FileField()
-    radius = models.PositiveIntegerField()
-    #studying_fields=models.CharField(max_length=500)
-    #facebook_page=models.URLField(blank = True, null=True)
-    #friends = models.ManyToManyField(User, related_name="profile_friends")
+    interest = models.CharField(max_length = 500)
+    profile_photo=models.FileField()
+    studying_fields=models.CharField(max_length=500)
+    facebook_page=models.URLField(blank = True, null=True)
+    friends = models.ManyToManyField(User, related_name="profile_friends")
 
 class Event(models.Model):
-    # FOOD='Food'
-    # STUDY='Study'
-    # OTHER='Other'
-    # KIND_CHOICES=(
-    #     (FOOD,'Food'),
-    #     (STUDY,'Study'),
-    #     (OTHER,'Other'),
-    #     )
+    FOOD='Food'
+    STUDY='Study'
+    OTHER='Other'
+    KIND_CHOICES=(
+        (FOOD,'Food'),
+        (STUDY,'Study'),
+        (OTHER,'Other'),
+        )
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE, 
         related_name = "event_creator")
-    symptoms = models.CharField(max_length = 140)
-    #kind = models.CharField(max_length=100, choices=KIND_CHOICES, default=FOOD)
+    name = models.CharField(max_length = 500)
+    kind = models.CharField(max_length=100, choices=KIND_CHOICES, default=FOOD)
+    end_time = models.TimeField(default = datetime.datetime.now) 
+    start_time = models.TimeField(default = datetime.datetime.now) 
     date = models.DateField(default = datetime.date.today)
-    location = models.CharField(max_length = 100)
-    prediction = models.CharField(max_length = 100)
+    location = models.CharField(max_length = 500)
+    description = models.TextField()
+    event_photo=models.FileField(blank=True, null=True)
 
     def __str__(self):
         return self.name + "at" + self.location
