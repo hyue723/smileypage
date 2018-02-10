@@ -2,6 +2,7 @@ from django.contrib.auth.models import Permission, User
 from django.db import models
 import datetime
 from django.utils import timezone
+# when ever you change things in models, makemigration and migrate
 
 class Profile(models.Model):
     UNDERGRADUATE = "Undergraduate Student"

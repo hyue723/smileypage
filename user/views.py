@@ -45,12 +45,12 @@ def login_user(request):
                 else:
                     return HttpResponseRedirect(reverse('user:profile'))
             else:
-                return render(request, 'user/login.html', {'error_message': 
+                return render(request, 'user/login_med.html', {'error_message': 
                            "The user account is not active"})
     if login_initial == False:
-        return render(request, 'user/login.html', {'error_message': 
+        return render(request, 'user/login_med.html', {'error_message': 
         "Either the username or the password is incorrect. Please try again."})
-    return render(request, 'user/login.html')
+    return render(request, 'user/login_med.html')
 
 
 def logout_user(request):
