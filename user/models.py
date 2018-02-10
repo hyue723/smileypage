@@ -37,7 +37,7 @@ class Event(models.Model):
     user = models.ForeignKey(User, default = 1, on_delete = models.CASCADE, 
         related_name = "event_creator")
     symptoms = models.CharField(max_length = 500, default='')
-    photo = models.FileField(default = '/static/images/bg-01.jpg')
+    photo = models.FileField(upload_to='uploads/', blank=True, null=True)
     #kind = models.CharField(max_length=100, choices=KIND_CHOICES, default=FOOD)
     date = models.DateField(default = datetime.date.today)
     location = models.CharField(max_length = 100, default='')

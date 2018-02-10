@@ -1,13 +1,13 @@
 import requests
 
-subscription_key = "xxxxxxxxxxxxxxxxxxxxxxxxx"
+subscription_key = "cbf2b70a2d8649079256eae159c848f8"
 assert subscription_key
 
 def analyze_image(image_path):
+	image_path = 'static/images/bg-0.1.jpg'
 	vision_base_url = "https://eastus2.api.cognitive.microsoft.com/vision/v1.0/"
 	vision_analyze_url = vision_base_url + "analyze"
 	image_url = image_path
-
 	headers  = {'Ocp-Apim-Subscription-Key': subscription_key }
 	params   = {'visualFeatures': 'Categories,Description,Color'}
 	data     = {'url': image_url}
