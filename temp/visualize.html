@@ -83,21 +83,26 @@
         source: new ol.source.OSM()
       });
 
-      var map = new ol.Map({
-        layers: [layer],
-        target: 'map',
-        view: new ol.View({
-          center: [0, 0],
-          zoom: 2
-        })
-      });
-
 
       //var locations = {{ locations || safe }};
 
       locations = ["cough 16.2807333 -16.53877326", 
                    "fever 3.34559232 8.65413288",
                    "fever 8.49563241 10.65041661"];
+
+      center = locations[0].split(' ');
+      center[1] = parseFloat(center[1]);
+      center[2] = parseFloat(center[2]);
+      console.log(center);
+
+      var map = new ol.Map({
+        layers: [layer],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.fromLonLat(center.slice(1,3)),
+          zoom: 4
+        })
+      });
       
       for(var i = 0; i < locations.length; i++) {
         var loc = locations[i].split(' ');
