@@ -2,9 +2,9 @@
 {% extends 'user/base.html' %}
 {% load staticfiles %}
 
-{% block title %}SmileyPage MyEvents{% endblock %}
+{% block title %}Diagnosis{% endblock %}
 
-{% block username %}{{user.username}}'s SmileyPage -- MyEvents{% endblock %}
+{% block username %}{{user.username}}'s Homepage{% endblock %}
 
 {% block body %}
 {% for profile in profiles %}
@@ -46,7 +46,7 @@
                 <a href = "{% url 'user:myevents_future' %}">Future Events</a>
             </li> -->
             <li>
-            <a href="{% url 'user:create_event' %}">Add New Record</a>
+            <a href="{% url 'user:create_event' %}">Add New Reports</a>
             </li>
         </ul>
     </nav>
@@ -93,7 +93,7 @@
     <div class="col-sm-8 col-lg-5">
                     <div class="thumbnail"  id="transparent">
                         <div class="caption">
-                        <h2 id="normalLetter">No Records Available~</h2>
+                        <h2 id="normalLetter">No Reports Available~</h2>
                         </div>
                     </div>
     </div>

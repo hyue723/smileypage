@@ -32,10 +32,9 @@
 
 </head>
 
-<body background={%block background%} "/static/img/bg7.jpg"{% endblock %}>
+<body background={%block background%} "/static/images/bg-01.jpg"{% endblock %}>
 
-    <div class="brand">SmileyPage</div>
-    <div class="address-bar">why lonely?</div>
+    <div class="brand">Diagnosis</div>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
@@ -49,19 +48,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <a class="navbar-brand" href="{% url 'home:index' %}">SmileyPage</a>
+                <a class="navbar-brand" href="{% url 'home:index' %}">Diagnosis</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="{% url 'home:index' %}">Home</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:about' %}">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'home:tutorial' %}">Tutorial</a>
                     </li>
                     <li>
                         <a href="{% url 'user:login' %}">Login</a>
@@ -80,16 +73,6 @@
     <!-- /.container -->
     {% block body %}
     {% endblock %}
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>Enjoy Everthing with Friends ~ </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <!-- jQuery -->
     <script src="/static/js/jquery.js" ></script>
 
