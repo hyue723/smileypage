@@ -6,7 +6,9 @@ Provide free diagnosis for users based on their symptoms submitted by either tex
 
 ## Tools:
 **Web App Framework**: Django
+
 **Porgramming languages**: Python, html, java script, css
+
 **API's**: OpenLayers, Google Map
 
 ## Features available:
